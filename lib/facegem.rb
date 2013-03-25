@@ -1,5 +1,5 @@
 class GraphAPI
-    def self.hi
-        puts "Hello World"
-    end
+ def self.hi
+   "hello world"
+ end
 end
