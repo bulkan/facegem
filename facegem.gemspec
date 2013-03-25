@@ -5,5 +5,7 @@ Gem::Specification.new do |s|
     s.authors  = ['Bulkan Evcimen']
     s.email    = 'bulkan@gmail.com'
     s.files    = ["lib/facegem.rb"]
-    s.homepage = 'http://rubygems.org/gems/facegem'
+    s.homepage = 'http://github.com/bulkan/facegem'
+
+    s.add_dependency 'httparty', "~> 0.10.2"
 end
