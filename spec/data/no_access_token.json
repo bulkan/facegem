@@ -1,0 +1,7 @@
+{
+   "error": {
+      "message": "Unsupported get request",
+      "type": "GraphMethodException",
+      "code": 100
+   }
+}

@@ -1,21 +1,49 @@
 require "httparty"
+require "json"
 
 class GraphAPI
-  attr_accessor :token, :url
-
   # should include HTTParty mixin here
-  # include HTTParty
+  include HTTParty
 
-  def initialize(token=false)
+  attr_accessor :token
+
+  base_uri "https://graph.facebook.com"
+
+  def initialize(token="")
     @token = token
-    @url = 'https://graph.facebook.com'
   end
 
-  def get(path='')
-    url = "#{self.url}/#{path}"
-    response = HTTParty.get(url, :query => {:access_token => self.token})
-    puts response.body, response.code
+  def get(path='', options={})
 
-    # TODO: parse body as JSON
+    if options.has_key? :query
+      options[:query].update({:access_token=>@token})
+    else
+      options[:query] = {:access_token=>@token}
+    end
+
+    response = self.class.get(path, options)
+
+    content_type = response.headers.fetch "content-type"
+
+    if content_type.index("json")
+      JSON.load response.body
+    end
+  end
+
+  def post(path='', options={})
+
+    if options.has_key? :query
+      options[:query].update({:access_token=>@token})
+    else
+      options[:query] = {:access_token=>@token}
+    end
+
+    response = self.class.post(path, options)
+
+    content_type = response.headers.fetch "content-type"
+
+    if content_type.index("json") and response.body
+      JSON.load response.body
+    end
   end
 end
